@@ -1,0 +1,10 @@
+Next release
+============
+
+Bug Fixes
+---------
+
+- The _get method of BaseResource now complains with an AttributeError when a space is found in
+  the URL
+
+- When the response to a request is None, return None directly
