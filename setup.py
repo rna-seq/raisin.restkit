@@ -3,7 +3,7 @@ import sys, os
 
 version = '1.0'
 
-setup(name='rnaseq.restkit',
+setup(name='raisin.restkit',
       version=version,
       description="",
       long_description="""\
@@ -15,7 +15,7 @@ setup(name='rnaseq.restkit',
       url='',
       license='',
       packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
-      namespace_packages = ['rnaseq'],
+      namespace_packages = ['raisin'],
       include_package_data=True,
       zip_safe=False,
       install_requires=[
