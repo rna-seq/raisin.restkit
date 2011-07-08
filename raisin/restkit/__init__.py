@@ -19,7 +19,7 @@ class BaseResource():
         if " " in path:
             raise AttributeError
         if content_type:
-            headers= {'Accept' : content_type}
+            headers = {'Accept' : content_type}
         else:
             headers = {}
         try:
