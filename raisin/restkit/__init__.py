@@ -50,7 +50,7 @@ class BaseResource():
                 content_length = res.headers['content-length']
             else:
                 print "Warning: Content length header not found!"
-                raise AttibuteError
+                raise AttributeError
             if not len(body) == int(content_length):
                 print "Warning: Body length not correct!"
                 raise AttributeError
