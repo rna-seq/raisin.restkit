@@ -14,19 +14,20 @@ from restkit.errors import UnexpectedEOF
 
 #restkit.set_logging('debug')
 
+
 class BaseResource():
     def _get(self, path, content_type=None):
         if " " in path:
             raise AttributeError
         if content_type:
-            headers = {'Accept' : content_type}
+            headers = {'Accept': content_type}
         else:
             headers = {}
         try:
-            res = request(path, headers = headers)
-        except (ResourceNotFound, 
-               Unauthorized, 
-               RequestFailed, 
+            res = request(path, headers=headers)
+        except (ResourceNotFound,
+               Unauthorized,
+               RequestFailed,
                RedirectLimit,
                RequestError,
                InvalidUrl,
@@ -44,9 +45,9 @@ class BaseResource():
         body = None
         if res.status == '200 OK':
             body = res.body_string()
-            if res.headers.has_key('Content-Length'):
+            if 'Content-Length' in res.headers:
                 content_length = res.headers['Content-Length']
-            elif res.headers.has_key('content-length'):
+            elif 'content-length' in res.headers:
                 content_length = res.headers['content-length']
             else:
                 print "Warning: Content length header not found!"
@@ -56,8 +57,9 @@ class BaseResource():
                 raise AttributeError
         return body
 
+
 class GenericResource(BaseResource):
-        
+
     def get(self, path, content_type=None):
         print path, content_type
         return self._get(path, content_type)
