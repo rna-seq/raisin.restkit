@@ -34,7 +34,7 @@ class BaseResource():
                ProxyError,
                BadStatusLine,
                ParserError,
-               UnexpectedEOF), e:
+               UnexpectedEOF):
             print path
             return None
         except:
