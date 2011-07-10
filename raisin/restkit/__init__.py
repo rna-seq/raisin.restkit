@@ -1,4 +1,3 @@
-import restkit
 from restkit import request
 from restkit.errors import ResourceNotFound
 from restkit.errors import Unauthorized
