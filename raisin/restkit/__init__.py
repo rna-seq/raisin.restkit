@@ -1,3 +1,5 @@
+"""Request RESTful resources with restkit"""
+
 from restkit import request
 from restkit.errors import ResourceNotFound
 from restkit.errors import Unauthorized
@@ -14,8 +16,9 @@ from restkit.errors import UnexpectedEOF
 #restkit.set_logging('debug')
 
 
-class BaseResource():
-    def _get(self, path, content_type=None):
+class Resource():
+    def get(self, path, content_type=None):
+        print path, content_type
         if " " in path:
             raise AttributeError
         if content_type:
@@ -56,11 +59,4 @@ class BaseResource():
                 raise AttributeError
         return body
 
-
-class GenericResource(BaseResource):
-
-    def get(self, path, content_type=None):
-        print path, content_type
-        return self._get(path, content_type)
-
-resource = GenericResource()
+resource = Resource()
