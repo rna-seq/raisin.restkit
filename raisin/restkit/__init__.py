@@ -16,47 +16,45 @@ from restkit.errors import UnexpectedEOF
 #restkit.set_logging('debug')
 
 
-class Resource():
-    def get(self, path, content_type=None):
-        print path, content_type
-        if " " in path:
-            raise AttributeError
-        if content_type:
-            headers = {'Accept': content_type}
+def get_resource(path, content_type=None):
+    """Get RESTful resource while nicely handling restkit exceptions"""
+    print path, content_type
+    if " " in path:
+        raise AttributeError
+    if content_type:
+        headers = {'Accept': content_type}
+    else:
+        headers = {}
+    try:
+        res = request(path, headers=headers)
+    except (ResourceNotFound,
+           Unauthorized,
+           RequestFailed,
+           RedirectLimit,
+           RequestError,
+           InvalidUrl,
+           ResponseError,
+           ProxyError,
+           BadStatusLine,
+           ParserError,
+           UnexpectedEOF):
+        print path
+        return None
+    except:
+        raise
+    if res is None:
+        return None
+    body = None
+    if res.status == '200 OK':
+        body = res.body_string()
+        if 'Content-Length' in res.headers:
+            content_length = res.headers['Content-Length']
+        elif 'content-length' in res.headers:
+            content_length = res.headers['content-length']
         else:
-            headers = {}
-        try:
-            res = request(path, headers=headers)
-        except (ResourceNotFound,
-               Unauthorized,
-               RequestFailed,
-               RedirectLimit,
-               RequestError,
-               InvalidUrl,
-               ResponseError,
-               ProxyError,
-               BadStatusLine,
-               ParserError,
-               UnexpectedEOF):
-            print path
-            return None
-        except:
-            raise
-        if res is None:
-            return None
-        body = None
-        if res.status == '200 OK':
-            body = res.body_string()
-            if 'Content-Length' in res.headers:
-                content_length = res.headers['Content-Length']
-            elif 'content-length' in res.headers:
-                content_length = res.headers['content-length']
-            else:
-                print "Warning: Content length header not found!"
-                raise AttributeError
-            if not len(body) == int(content_length):
-                print "Warning: Body length not correct!"
-                raise AttributeError
-        return body
-
-resource = Resource()
+            print "Warning: Content length header not found!"
+            raise AttributeError
+        if not len(body) == int(content_length):
+            print "Warning: Body length not correct!"
+            raise AttributeError
+    return body
