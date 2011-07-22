@@ -16,7 +16,7 @@ from restkit.errors import UnexpectedEOF
 #restkit.set_logging('debug')
 
 
-def get_resource(path, content_type=None):
+def get_resource_by_uri(path, content_type=None):
     """Get RESTful resource while nicely handling restkit exceptions"""
     print path, content_type
     if " " in path:
