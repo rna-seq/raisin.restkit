@@ -18,7 +18,6 @@ from restkit.errors import UnexpectedEOF
 
 def get_resource_by_uri(path, content_type=None):
     """Get RESTful resource while nicely handling restkit exceptions"""
-    print path, content_type
     if " " in path:
         raise AttributeError
     if content_type:
@@ -38,7 +37,6 @@ def get_resource_by_uri(path, content_type=None):
            BadStatusLine,
            ParserError,
            UnexpectedEOF):
-        print path
         return None
     except:
         raise
