@@ -12,7 +12,6 @@ from restkit.errors import ProxyError
 from restkit.errors import BadStatusLine
 from restkit.errors import ParserError
 from restkit.errors import UnexpectedEOF
-
 #restkit.set_logging('debug')
 
 
@@ -56,3 +55,14 @@ def get_resource_by_uri(path, content_type=None):
             print "Warning: Body length not correct!"
             raise AttributeError
     return body
+
+
+class ResourceProvider:
+    """Helper class with a get method for fetching resources by uri"""
+
+    def __init__(self):
+        pass
+
+    def get(self, path, content_type=None):
+        """Get a resource by uri"""
+        return get_resource_by_uri(path, content_type)
